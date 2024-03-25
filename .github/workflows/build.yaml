@@ -2,9 +2,14 @@ name: Build Python App image and push to GAR
 
 # Define the trigger for this workflow (runs on push to the develop branch)
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+    inputs:
+      branch_name: 
+        description: "enter branch name"
+        required: true
 
       
 # Define environment variables      
@@ -30,6 +35,8 @@ jobs:
     # Step 1: Checkout code from the repository
     - name: 'Checkout code'
       uses: 'actions/checkout@v2'
+      with:
+        ref: ${{ github.events.input.branch_name }}
 
     - name: Install dependencies
       run: |
